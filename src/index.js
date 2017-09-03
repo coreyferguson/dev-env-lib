@@ -1,5 +1,2 @@
 
-class DevCli {
-}
-
-module.exports = DevCli;
+module.exports = require('./dev-cli');

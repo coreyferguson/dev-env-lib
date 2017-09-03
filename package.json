@@ -41,5 +41,8 @@
     "mocha": "^3.5.0",
     "sinon": "^3.2.1",
     "sinon-chai": "^2.13.0"
+  },
+  "dependencies": {
+    "js-yaml": "^3.9.1"
   }
 }
