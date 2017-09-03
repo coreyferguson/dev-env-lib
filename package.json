@@ -1,0 +1,35 @@
+{
+  "name": "dev-cli",
+  "version": "1.0.0",
+  "description": "Automate setup of development environments using collection of JavaScript APIs.",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coreyferguson/dev-cli.git"
+  },
+  "keywords": [
+    "cli",
+    "development",
+    "dev",
+    "environment",
+    "setup",
+    "docker",
+    "library",
+    "framework",
+    "command",
+    "line",
+    "interface"
+  ],
+  "author": "Corey Ferguson <corey.t.ferguson@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/coreyferguson/dev-cli/issues"
+  },
+  "homepage": "https://github.com/coreyferguson/dev-cli#readme"
+}
