@@ -1,0 +1,3 @@
+docker
+images
+--filter=reference=${model.name}

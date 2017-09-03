@@ -1,0 +1,4 @@
+find
+.
+-name
+${model.name}
