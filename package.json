@@ -7,7 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "eslint": "./node_modules/.bin/eslint .",
+    "test": "./node_modules/.bin/mocha test/spec/**/*.js",
+    "watch": "npm test -- --watch"
   },
   "repository": {
     "type": "git",
@@ -31,5 +33,13 @@
   "bugs": {
     "url": "https://github.com/coreyferguson/dev-cli/issues"
   },
-  "homepage": "https://github.com/coreyferguson/dev-cli#readme"
+  "homepage": "https://github.com/coreyferguson/dev-cli#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^4.6.0",
+    "mocha": "^3.5.0",
+    "sinon": "^3.2.1",
+    "sinon-chai": "^2.13.0"
+  }
 }
