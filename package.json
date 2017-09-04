@@ -1,6 +1,6 @@
 {
   "name": "dev-env-lib",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Automate setup of development environments using collection of JavaScript APIs.",
   "main": "src/index.js",
   "directories": {
@@ -8,7 +8,9 @@
   },
   "scripts": {
     "debug": "npm run watch -- --inspect --debug-brk",
-    "deployJsdoc": "npm run jsdoc && node scripts/deploy-jsdoc.js",
+    "release": "npm run releaseIt && npm run releaseJsdoc",
+    "releaseIt": "./node_modules/.bin/release-it",
+    "releaseJsdoc": "npm run jsdoc && node scripts/deploy-jsdoc.js",
     "eslint": "./node_modules/.bin/eslint .",
     "jsdoc": "rm -fr jsdoc && ./node_modules/.bin/jsdoc -d jsdoc src/**/*.js",
     "test": "./node_modules/.bin/mocha test/spec/**/*.js",
