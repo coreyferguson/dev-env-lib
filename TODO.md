@@ -1,4 +1,5 @@
 
 # TODO
 
-- [ ] style checker
+- [ ] config + user config
+- [ ] git
