@@ -2,6 +2,11 @@
 const ChildProcess = require('../cp/ChildProcess');
 const path = require('path');
 
+/**
+ * @memberOf dev
+ * @namespace git
+ */
+
 class Git {
 
   constructor(options) {
@@ -16,6 +21,15 @@ class Git {
     this._path = options.path || path;
   }
 
+  /**
+   * Clone a git repository.
+   * @memberOf dev.git
+   * @function clone
+   * @param {string} name - name of folder created by git clone
+   * @param {string} repository - clone url to git repository
+   * @param {string} branch - name of branch to checkout by default
+   * @returns {dev.cp~AggregatedOutput} aggregated output
+   */
   clone(name, repository, branch) {
     return this._clone(name, repository).then(() => {
       return this._checkout(name, branch);

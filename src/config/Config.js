@@ -5,6 +5,11 @@ const os = require('os');
 const path = require('path');
 const yaml = require('js-yaml');
 
+/**
+ * @memberOf dev
+ * @namespace config
+ */
+
 class Config {
 
   constructor(options) {
@@ -37,6 +42,12 @@ class Config {
     this.reset();
   }
 
+  /**
+   * Set up configuration from arguments, environment properties,
+   * user and default configurations.
+   * @memberOf dev.config
+   * @function setup
+   */
   setup() {
     this.reset();
     this._nconf.argv();
@@ -46,16 +57,36 @@ class Config {
     this._loadDefaultConfig();
   }
 
+  /**
+   * Reset all configurations.
+   * @memberOf dev.config
+   * @function reset
+   */
   reset() {
     this._nconf.overrides({});
     this._nconf.defaults({});
     this._nconf.reset();
   }
 
+  /**
+   * Get a configuration property.
+   * @memberOf dev.config
+   * @function get
+   * @param {string} key - property key
+   * @returns {string} property value
+   */
   get(key) {
     return nconf.get(key);
   }
 
+  /**
+   * Set a configuration property value.
+   * @memberOf dev.config
+   * @function set
+   * @param {string} key - property key
+   * @param {*} value - property value
+   * @returns {dev.config} for chaining
+   */
   set(key, value) {
     nconf.set(key, value);
     return this;

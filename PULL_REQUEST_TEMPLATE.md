@@ -1,5 +1,5 @@
 
-Requirement Levels: https://www.ietf.org/rfc/rfc2119.txt
+Requirement levels: https://www.ietf.org/rfc/rfc2119.txt
 
 # Principles
 

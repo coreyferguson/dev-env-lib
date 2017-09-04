@@ -4,8 +4,12 @@ const Config = require('./config');
 const Docker = require('./docker');
 const fs = require('fs');
 const Git = require('./git');
-const path = require('path');
 const Yaml = require('./yaml');
+const Path = require('./path');
+
+/**
+ * @namespace dev
+ */
 
 class DevCli {
 
@@ -13,7 +17,6 @@ class DevCli {
     // optional options
     options = options || {};
     this._fs = options.fs || fs;
-    this._path = options.path || path;
     // required options
     const { defaultConfigPath, userConfigPath, workingDirectory } = options;
     if (!workingDirectory) throw new Error('missing reguired option: workingDirectory');
@@ -24,10 +27,12 @@ class DevCli {
       defaultConfigPath,
       userConfigPath
     });
+
     this.cp = new ChildProcess({ workingDirectory });
     this.docker = new Docker({ workingDirectory });
     this.git = new Git({ workingDirectory });
     this.yaml = new Yaml({ workingDirectory });
+    this.path = new Path({ workingDirectory });
   }
 
 }

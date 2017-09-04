@@ -3,8 +3,8 @@
 
 - [x] yaml
 - [x] config + user config
-- [ ] git
-- [ ] JSDoc
+- [x] git
+- [x] JSDoc
 - [ ] release-it
 - [ ] yeoman generator
 - [ ] integrate
