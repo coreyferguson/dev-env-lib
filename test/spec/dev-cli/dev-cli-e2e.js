@@ -3,17 +3,21 @@ const DevCli = require('../../../src/dev-cli');
 const { expect } = require('../../util/test');
 const path = require('path');
 
-describe.only('dev-cli integration tests', () => {
+const workingDirectory = path.resolve(__dirname, 'workingDirectory');
+const userConfigPath = path.resolve(__dirname, 'user-config.yml');
+const defaultConfigPath = 'default-config.yml';
+
+describe('dev-cli e2e tests', () => {
 
   let dev;
 
   before(() => {
-    dev = new DevCli({
-      workingDirectory: path.resolve(__dirname, 'workingDirectory'),
-      userConfigPath: path.resolve(__dirname, 'user-config.yml'),
-      defaultConfigPath: 'default-config.yml'
-    });
+    dev = new DevCli({ workingDirectory, userConfigPath, defaultConfigPath });
     dev.config.setup();
+  });
+
+  afterEach(() => {
+    return dev.cp.spawn('rm', ['-fr', 'dev-cli-test']);
   });
 
   it('child process within workingDirectory', () => {
@@ -36,6 +40,20 @@ describe.only('dev-cli integration tests', () => {
     return expect(dev.yaml.load('default-config.yml')).to.eql({
       key1: 'value1',
       key2: 'value2'
+    });
+  });
+
+  it('git clones a repo', () => {
+    return dev.git.clone(
+      'dev-cli-test',
+      'git@github.com:coreyferguson/dev-cli.git',
+      'master'
+    ).then(() => {
+      return dev.cp.spawn('ls', {
+        cwd: path.resolve(workingDirectory, 'dev-cli-test')
+      });
+    }).then(response => {
+      expect(response.stdout).to.match(/README\.md/)
     });
   });
 

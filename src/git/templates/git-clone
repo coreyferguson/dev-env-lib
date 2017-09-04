@@ -1,0 +1,4 @@
+git
+clone
+${model.repository}
+${model.name}

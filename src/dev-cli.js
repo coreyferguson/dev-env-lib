@@ -3,6 +3,7 @@ const ChildProcess = require('./cp');
 const Config = require('./config');
 const Docker = require('./docker');
 const fs = require('fs');
+const Git = require('./git');
 const path = require('path');
 const Yaml = require('./yaml');
 
@@ -25,6 +26,7 @@ class DevCli {
     });
     this.cp = new ChildProcess({ workingDirectory });
     this.docker = new Docker({ workingDirectory });
+    this.git = new Git({ workingDirectory });
     this.yaml = new Yaml({ workingDirectory });
   }
 

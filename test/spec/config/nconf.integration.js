@@ -3,7 +3,7 @@ const nconf = require('nconf');
 const path = require('path');
 const { expect } = require('../../util/test');
 
-describe('nconf integration tests', () => {
+describe('nconf e2e tests', () => {
 
   const defaultConfigPath = 'default-config.yml';
   const userConfigPath = path.resolve(__dirname, 'user-config.yml');
