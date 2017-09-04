@@ -1,25 +1,31 @@
 
 const DevCli = require('../../../src');
-const { expect, yaml } = require('../../util/test');
+const { expect } = require('../../util/test');
+const path = require('path');
 
 describe('dev-cli unit tests', () => {
 
-  it('project directory is required option', () => {
-    const options = yaml(__dirname, 'config/constructor-required-options.yml');
+  const requiredOptions = {
+    workingDirectory: __dirname,
+    defaultConfigPath: 'default-config.yml',
+    userConfigPath: path.resolve(__dirname, 'user-config.yml')
+  };
+
+  it('workingDirectory is required option', () => {
+    const options = Object.assign({}, requiredOptions);
     delete options.workingDirectory;
     expect(() => {
       new DevCli(options);
     }).to.throw(/workingDirectory/);
   });
 
-  it('project directory exists', () => {
-    const options = yaml(__dirname, 'config/constructor-required-options.yml');
-    options.workingDirectory = __dirname;
+  it('workingDirectory exists', () => {
+    const options = Object.assign({}, requiredOptions);
     new DevCli(options);
   });
 
-  it('project directory does not exist', () => {
-    const options = yaml(__dirname, 'config/constructor-required-options.yml');
+  it('workingDirectory does not exist', () => {
+    const options = Object.assign({}, requiredOptions);
     options.workingDirectory = '/no/such/directory/will/be/found/here/../probably';
     expect(() => {
       new DevCli(options);
