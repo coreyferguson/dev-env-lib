@@ -1,0 +1,6 @@
+docker
+network
+create
+-d
+bridge
+${model.name}
