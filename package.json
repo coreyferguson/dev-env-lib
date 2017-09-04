@@ -1,6 +1,6 @@
 {
   "name": "dev-env-lib",
-  "version": "0.0.10",
+  "version": "1.0.0",
   "description": "Automate setup of development environments using collection of JavaScript APIs.",
   "main": "src/index.js",
   "directories": {
