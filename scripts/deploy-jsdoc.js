@@ -12,7 +12,7 @@ cp.spawn('git', ['init']).then(() => {
       'remote',
       'add',
       'origin',
-      'git@github.com:coreyferguson/dev-cli.git'
+      'git@github.com:coreyferguson/dev-env-lib.git'
     ]
   );
 }).then(res => {

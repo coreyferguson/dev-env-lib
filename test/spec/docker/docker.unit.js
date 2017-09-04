@@ -5,9 +5,9 @@ const ChildProcess = require('../../../src/cp');
 
 describe('docker unit tests', () => {
 
-  const dockerName = 'dev-cli-test-docker';
-  const networkName = 'dev-cli-test-net';
-  const containerName = 'dev-cli-test-container';
+  const dockerName = 'dev-env-lib-test-docker';
+  const networkName = 'dev-env-lib-test-net';
+  const containerName = 'dev-env-lib-test-container';
   let docker;
   let cp;
 

@@ -64,7 +64,7 @@ class Docker {
       'templates/getImage',
       { name }
     ).then(response => {
-      return /dev-cli-test-docker/.test(response.stdout);
+      return /dev-env-lib-test-docker/.test(response.stdout);
     });
   }
 

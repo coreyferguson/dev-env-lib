@@ -1,5 +1,5 @@
 
-const DevCli = require('../../../src/dev-cli');
+const DevCli = require('../../../src/dev-env-lib');
 const { expect } = require('../../util/test');
 const path = require('path');
 
@@ -7,7 +7,7 @@ const workingDirectory = path.resolve(__dirname, 'workingDirectory');
 const userConfigPath = path.resolve(__dirname, 'user-config.yml');
 const defaultConfigPath = 'default-config.yml';
 
-describe('dev-cli e2e tests', () => {
+describe('dev-env-lib e2e tests', () => {
 
   let dev;
 
@@ -17,7 +17,7 @@ describe('dev-cli e2e tests', () => {
   });
 
   afterEach(() => {
-    return dev.cp.spawn('rm', ['-fr', 'dev-cli-test']);
+    return dev.cp.spawn('rm', ['-fr', 'dev-env-lib-test']);
   });
 
   it('child process within workingDirectory', () => {
@@ -32,7 +32,7 @@ describe('dev-cli e2e tests', () => {
   });
 
   it('docker checks image existance', () => {
-    return expect(dev.docker.imageExists('dev-cli-test-docker'))
+    return expect(dev.docker.imageExists('dev-env-lib-test-docker'))
       .to.eventually.eql(false);
   });
 
@@ -45,12 +45,12 @@ describe('dev-cli e2e tests', () => {
 
   it('git clones a repo', () => {
     return dev.git.clone(
-      'dev-cli-test',
-      'git@github.com:coreyferguson/dev-cli.git',
+      'dev-env-lib-test',
+      'git@github.com:coreyferguson/dev-env-lib.git',
       'master'
     ).then(() => {
       return dev.cp.spawn('ls', {
-        cwd: path.resolve(workingDirectory, 'dev-cli-test')
+        cwd: path.resolve(workingDirectory, 'dev-env-lib-test')
       });
     }).then(response => {
       expect(response.stdout).to.match(/README\.md/)

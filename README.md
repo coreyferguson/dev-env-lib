@@ -1,9 +1,9 @@
 
-# dev-cli
+# dev-env-lib
 
 ## Summary
 
-`dev-cli` is a collection of utilities to speed up the process of automating
+`dev-env-lib` is a collection of utilities to speed up the process of automating
 development environment setup.
 
 ## CONTRIBUTING
@@ -12,4 +12,4 @@ To contribute to this repository, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## API
 
-Browse the API here: https://coreyferguson.github.io/dev-cli/
+Browse the API here: https://coreyferguson.github.io/dev-env-lib/

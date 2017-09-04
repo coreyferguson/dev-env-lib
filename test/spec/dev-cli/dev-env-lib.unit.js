@@ -3,7 +3,7 @@ const DevCli = require('../../../src');
 const { expect } = require('../../util/test');
 const path = require('path');
 
-describe('dev-cli unit tests', () => {
+describe('dev-env-lib unit tests', () => {
 
   const requiredOptions = { workingDirectory: __dirname };
 

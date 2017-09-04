@@ -1,2 +1,2 @@
 
-module.exports = require('./dev-cli');
+module.exports = require('./dev-env-lib');

@@ -12,22 +12,22 @@ describe('git e2e tests', function() {
   this.timeout(5000);
 
   afterEach(() => {
-    return cp.spawn('rm', ['-fr', 'dev-cli-name']);
+    return cp.spawn('rm', ['-fr', 'dev-env-lib-name']);
   });
 
   it('clone success', () => {
     const git = new Git({ workingDirectory });
     return git.clone(
-      'dev-cli-name',
-      'git@github.com:coreyferguson/dev-cli.git',
+      'dev-env-lib-name',
+      'git@github.com:coreyferguson/dev-env-lib.git',
       'testBranch'
     ).then(() => {
       return cp.spawn('ls');
     }).then(response => {
-      expect(response.stdout).to.match(/dev-cli-name/);
+      expect(response.stdout).to.match(/dev-env-lib-name/);
     }).then(() => {
       return cp.spawn('git', ['st'], {
-        cwd: path.resolve(workingDirectory, 'dev-cli-name')
+        cwd: path.resolve(workingDirectory, 'dev-env-lib-name')
       });
     }).then(response => {
       expect(response.stdout).to.match(/On branch testBranch/);
@@ -38,8 +38,8 @@ describe('git e2e tests', function() {
   it('clone no such repository', () => {
     const git = new Git({ workingDirectory });
     const promise = git.clone(
-      'dev-cli-name',
-      'git@github.com:coreyferguson/dev-cli-doesnt-exist.git',
+      'dev-env-lib-name',
+      'git@github.com:coreyferguson/dev-env-lib-doesnt-exist.git',
       'testBranch'
     );
     return Promise.all([
@@ -53,8 +53,8 @@ describe('git e2e tests', function() {
   it('clone no such branch', () => {
     const git = new Git({ workingDirectory });
     const promise = git.clone(
-      'dev-cli-name',
-      'git@github.com:coreyferguson/dev-cli.git',
+      'dev-env-lib-name',
+      'git@github.com:coreyferguson/dev-env-lib.git',
       'no-such-branch'
     );
     return Promise.all([
