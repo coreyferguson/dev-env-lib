@@ -5,11 +5,7 @@ const path = require('path');
 
 describe('dev-cli unit tests', () => {
 
-  const requiredOptions = {
-    workingDirectory: __dirname,
-    defaultConfigPath: 'default-config.yml',
-    userConfigPath: path.resolve(__dirname, 'user-config.yml')
-  };
+  const requiredOptions = { workingDirectory: __dirname };
 
   it('workingDirectory is required option', () => {
     const options = Object.assign({}, requiredOptions);
