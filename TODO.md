@@ -2,7 +2,8 @@
 # TODO
 
 - [x] yaml
-- [ ] config + user config
+- [x] config + user config
 - [ ] git
 - [ ] release-it
 - [ ] yeoman generator
+- [ ] integrate
