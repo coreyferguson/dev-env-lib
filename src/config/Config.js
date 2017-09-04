@@ -38,6 +38,7 @@ class Config {
   }
 
   setup() {
+    this.reset();
     this._nconf.argv();
     this._nconf.env();
     this._nconf.file('/nconf/doesnt/work/without/this');
