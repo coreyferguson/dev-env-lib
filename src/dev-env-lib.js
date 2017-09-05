@@ -11,7 +11,7 @@ const Path = require('./path');
  * @namespace dev
  */
 
-class DevCli {
+class DevEnvLib {
 
   constructor(options) {
     // optional options
@@ -37,4 +37,4 @@ class DevCli {
 
 }
 
-module.exports = DevCli;
+module.exports = DevEnvLib;

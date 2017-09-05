@@ -1,5 +1,5 @@
 
-const DevCli = require('../../../src/dev-env-lib');
+const DevEnvLib = require('../../../src/dev-env-lib');
 const { expect } = require('../../util/test');
 const path = require('path');
 
@@ -12,7 +12,7 @@ describe('dev-env-lib e2e tests', () => {
   let dev;
 
   before(() => {
-    dev = new DevCli({ workingDirectory, userConfigPath, defaultConfigPath });
+    dev = new DevEnvLib({ workingDirectory, userConfigPath, defaultConfigPath });
     dev.config.setup();
   });
 
