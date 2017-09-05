@@ -59,7 +59,6 @@ describe('docker unit tests', () => {
   it('create network', () => {
     return docker.createNetwork(networkName).then(response => {
       expect(response.stdout).to.match(/\w+\n/);
-      // console.log('response:', response);
     });
   });
 

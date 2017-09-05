@@ -39,7 +39,6 @@ class Config {
       throw new Error('Missing required option: workingDirectory');
     }
     this._workingDirectory = options.workingDirectory;
-    this.reset();
   }
 
   /**
