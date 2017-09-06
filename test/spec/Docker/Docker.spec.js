@@ -1,21 +1,18 @@
 
-const Docker = require('../../../src/docker');
+const Docker = require('../../../src/Docker');
 const { expect } = require('../../util/test');
-const ChildProcess = require('../../../src/cp');
+const ChildProcess = require('../../../src/ChildProcess');
 
-describe('docker unit tests', () => {
+describe('Docker unit tests', () => {
 
   const dockerName = 'dev-env-lib-test-docker';
   const networkName = 'dev-env-lib-test-net';
   const containerName = 'dev-env-lib-test-container';
-  let docker;
-  let cp;
-
-  before(() => {
-    const workingDirectory = __dirname;
-    docker = new Docker({ workingDirectory });
-    cp = new ChildProcess({ workingDirectory });
-  });
+  const workingDirectory = __dirname;
+  const sourceDirectory = workingDirectory;
+  const defaultOptions = { workingDirectory };
+  const docker =  new Docker(defaultOptions);
+  const cp = new ChildProcess({ workingDirectory, sourceDirectory });
 
   afterEach(() => {
     return Promise.all([
@@ -23,6 +20,12 @@ describe('docker unit tests', () => {
       docker.removeNetwork(networkName),
       docker.removeContainer(containerName)
     ]);
+  });
+
+  it('Docker constructor missing workingDirectory', () => {
+    const options = Object.assign({}, defaultOptions);
+    delete options.workingDirectory;
+    expect(() => new Docker(options)).to.throw(/workingDirectory/);
   });
 
   it('build docker image / check existance', () => {
@@ -89,7 +92,6 @@ describe('docker unit tests', () => {
   it('remove non-existant container', () => {
     return docker.removeContainer(containerName);
   });
-
 
   it('wait for container output', () => {
     return cp.spawn(

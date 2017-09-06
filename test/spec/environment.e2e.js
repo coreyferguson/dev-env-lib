@@ -1,7 +1,7 @@
 
 const { expect, sinon } = require('../util/test');
 
-describe('environment e2e tests', () => {
+describe('environment unit tests', () => {
 
     it('`describe` and `it` are defined', () => {
     // no errors = success

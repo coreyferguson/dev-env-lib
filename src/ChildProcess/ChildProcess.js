@@ -4,23 +4,30 @@ const { spawn } = require('child_process');
 const templateParser = require('child-process-template-parser');
 
 /**
- * @memberOf dev
- * @namespace cp
+ * Node's child_process wrapped in a promise with buffered stdio.
  */
-
 class ChildProcess {
 
+  /**
+   * @param {string} workingDirectory - Default working directory when spawning processes.
+   * @param {string} sourceDirectory - Source directory used when resolving spawn templates.
+   */
   constructor(options) {
     options = options || {};
-    this._path = options.path || path;
-    this._spawn = options.spawn || spawn;
-    this._templateParser = options.templateParser || templateParser;
+    const { workingDirectory, sourceDirectory } = options;
+    if (workingDirectory === undefined) {
+      throw new Error('Missing required option: workingDirectory');
+    }
     this._workingDirectory = options.workingDirectory;
+    if (sourceDirectory === undefined) {
+      throw new Error('Missing required option: sourceDirectory');
+    }
+    this._sourceDirectory = options.sourceDirectory;
   }
 
   /**
    * Aggregated output from a child process.
-   * @typedef {Object} dev.cp~AggregatedOutput
+   * @typedef {Object} ChildProcess~AggregatedOutput
    * @property {string} output Aggregated stdout and stderr
    * @property {string} stdout Aggregated stdout
    * @property {string} stderr Aggregated stderr
@@ -28,12 +35,10 @@ class ChildProcess {
 
   /**
    * Spawn a new process. Wrap in a promise. Buffer output.
-   * @memberOf dev.cp
-   * @function spawn
    * @param {string} command Same as Node's child_process.spawn
    * @param {string[]} args Same as Node's child_process.spawn
    * @param {Object} options Same as Node's child_process.spawn
-   * @returns {dev.cp~AggregatedOutput} aggregated output
+   * @returns {ChildProcess~AggregatedOutput} aggregated output
    * @see [Node's child_process.spawn]{@link https://nodejs.org/dist/latest-v6.x/docs/api/child_process.html#child_process_child_process_spawn_command_args_options}
    */
   spawn(command, args, options) {
@@ -42,8 +47,8 @@ class ChildProcess {
     }, options);
     return new Promise((resolve, reject) => {
       let cp;
-      if (args === undefined) cp = this._spawn(command, options);
-      else cp = this._spawn(command, args, options);
+      if (args === undefined) cp = spawn(command, options);
+      else cp = spawn(command, args, options);
       let output = '';
       let stdout = '';
       let stderr = '';
@@ -66,16 +71,17 @@ class ChildProcess {
 
   /**
    * Spawn a new process using the given template for the command and args.
-   * @memberOf dev.cp
-   * @function spawnTemplate
-   * @param {string} templatePath Relative or absolute path to template.
+   * @param {string} templatePath Absolute or relative (from sourceDirectory) path to template.
    * @param {Object} model Model object passed into template.
    * @param {Object} options Same as Node's child_process.spawn
-   * @returns {dev.cp~AggregatedOutput} aggregated output
+   * @returns {ChildProcess~AggregatedOutput} aggregated output
    * @see [Node's child_process.spawn]{@link https://nodejs.org/dist/latest-v6.x/docs/api/child_process.html#child_process_child_process_spawn_command_args_options}
    */
   spawnTemplate(templatePath, model, options) {
-    const absolutePath = this._path.resolve(this._workingDirectory, templatePath);
+    options = Object.assign({
+      cwd: this._workingDirectory
+    }, options);
+    const absolutePath = path.resolve(this._sourceDirectory, templatePath);
     const cmd = templateParser.parse(absolutePath, model);
     return this.spawn(cmd.command, cmd.args, options);
   }

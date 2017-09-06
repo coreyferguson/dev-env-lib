@@ -1,18 +1,23 @@
 
-const ChildProcess = require('../../../src/cp');
-const Git = require('../../../src/git');
+const ChildProcess = require('../../../src/ChildProcess');
+const Git = require('../../../src/Git');
 const path = require('path');
 const { expect } = require('../../util/test');
 
 const workingDirectory = path.resolve(__dirname, 'workingDirectory');
-const cp = new ChildProcess({ workingDirectory });
+const sourceDirectory = workingDirectory;
+const cp = new ChildProcess({ workingDirectory, sourceDirectory });
 
-describe('git e2e tests', function() {
+describe('Git unit tests', function() {
 
   this.timeout(5000);
 
   afterEach(() => {
     return cp.spawn('rm', ['-fr', 'dev-env-lib-name']);
+  });
+
+  it('Git constructor missing workingDirectory', () => {
+    expect(() => new Git()).to.throw(/workingDirectory/);
   });
 
   it('clone success', () => {

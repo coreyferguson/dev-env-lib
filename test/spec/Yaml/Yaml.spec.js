@@ -1,13 +1,17 @@
 
 const { expect } = require('../../util/test');
-const Yaml = require('../../../src/yaml/Yaml');
+const Yaml = require('../../../src/Yaml');
 
-describe('yaml unit tests', () => {
+describe('Yaml unit tests', () => {
 
   let yaml;
 
   before(() => {
-    yaml = new Yaml({ workingDirectory: __dirname });
+    yaml = new Yaml({ sourceDirectory: __dirname });
+  });
+
+  it('Yaml constructor missing sourceDirectory', () => {
+    expect(() => new Yaml()).to.throw(/sourceDirectory/);
   });
 
   it('load yaml properties', () => {

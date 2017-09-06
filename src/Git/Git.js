@@ -1,34 +1,34 @@
 
-const ChildProcess = require('../cp/ChildProcess');
+const ChildProcess = require('../ChildProcess');
 const path = require('path');
 
 /**
- * @memberOf dev
- * @namespace git
+ * Git utilities.
  */
-
 class Git {
 
+  /**
+   * @param {string} workingDirectory - Default working directory when running Git commands.
+   */
   constructor(options) {
-    // required - workingDirectory
     options = options || {};
     const { workingDirectory } = options;
     if (workingDirectory === undefined) {
       throw new Error('Missing required option: workingDirectory');
     }
     this._workingDirectory = workingDirectory;
-    this._cp = new ChildProcess({ workingDirectory })
-    this._path = options.path || path;
+    this._cp = new ChildProcess({
+      workingDirectory: options.workingDirectory,
+      sourceDirectory: __dirname
+    });
   }
 
   /**
    * Clone a git repository.
-   * @memberOf dev.git
-   * @function clone
    * @param {string} name - name of folder created by git clone
    * @param {string} repository - clone url to git repository
    * @param {string} branch - name of branch to checkout by default
-   * @returns {dev.cp~AggregatedOutput} aggregated output
+   * @returns {ChildProcess~AggregatedOutput} aggregated output
    */
   clone(name, repository, branch) {
     return this._clone(name, repository).then(() => {
@@ -37,14 +37,11 @@ class Git {
   }
 
   _clone(name, repository) {
-    const template = this._path.resolve(__dirname, 'templates/git-clone');
-    return this._cp.spawnTemplate(template, {
-      name, repository
-    });
+    return this._cp.spawnTemplate('templates/git-clone', { name, repository });
   }
 
   _checkout(name, branch) {
-    const template = this._path.resolve(__dirname, 'templates/git-checkout-branch');
+    const template = path.resolve(__dirname, 'templates/git-checkout-branch');
     const cwd = path.resolve(this._workingDirectory, name);
     return this._cp.spawnTemplate(
       template,

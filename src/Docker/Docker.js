@@ -1,33 +1,38 @@
 
-const ChildProcess = require('../cp');
+const ChildProcess = require('../ChildProcess');
 const path = require('path');
 const spawn = require('child_process').spawn;
 
 /**
- * @memberOf dev
- * @namespace docker
+ * Docker utilities.
  */
-
 class Docker {
 
+  /**
+   * @param {string} workingDirectory - Default working directory when running docker commands.
+   */
   constructor(options) {
     options = options || {};
-    this._path = options.path || path;
-    this._workingDirectory = options.workingDirectory;
-    this._cp = new ChildProcess({ workingDirectory: __dirname });
+    const { workingDirectory } = options;
+    if (workingDirectory === undefined) {
+      throw new Error('Missing required option: workingDirectory');
+    }
+    this._workingDirectory = workingDirectory;
+    this._cp = new ChildProcess({
+      workingDirectory: options.workingDirectory,
+      sourceDirectory: __dirname
+    });
   }
 
   /**
    * Build docker image.
-   * @memberOf dev.docker
-   * @function buildImage
-   * @param {string} dockerfilePath - Relative or absolute path to Dockerfile
+   * @param {string} dockerfilePath - Absolute or relative (to workingDirectory) path to Dockerfile
    * @param {string} name - Name of docker image
-   * @returns {dev.cp~AggregatedOutput} aggregated output
+   * @returns {ChildProcess~AggregatedOutput} aggregated output
    */
   buildImage(dockerfilePath, name) {
     // convert relative path to absolute path
-    const dockerFileAbsolutePath = this._path.resolve(
+    const dockerFileAbsolutePath = path.resolve(
       this._workingDirectory, dockerfilePath);
     return this._cp.spawnTemplate('templates/buildImage', {
       dockerFileAbsolutePath,
@@ -37,10 +42,8 @@ class Docker {
 
   /**
    * Remove docker image.
-   * @memberOf dev.docker
-   * @function removeImage
    * @param {string} name - Name of docker image
-   * @returns {dev.cp~AggregatedOutput} aggregated output
+   * @returns {ChildProcess~AggregatedOutput} aggregated output
    */
   removeImage(name) {
     return this._cp.spawnTemplate(
@@ -54,8 +57,6 @@ class Docker {
 
   /**
    * Check if a docker image already exists.
-   * @memberOf dev.docker
-   * @function imageExists
    * @param {string} name - Name of docker image
    * @returns {boolean} existance of docker image
    */
@@ -70,10 +71,8 @@ class Docker {
 
   /**
    * Create a virtual network with docker.
-   * @memberOf dev.docker
-   * @function createNetwork
    * @param {string} name - Name of docker image
-   * @returns {dev.cp~AggregatedOutput} aggregated output
+   * @returns {ChildProcess~AggregatedOutput} aggregated output
    */
   createNetwork(name) {
     return this._cp.spawnTemplate(
@@ -87,10 +86,8 @@ class Docker {
 
   /**
    * Remove a virtual network with docker.
-   * @memberOf dev.docker
-   * @function removeNetwork
    * @param {string} name - Name of docker image
-   * @returns {dev.cp~AggregatedOutput} aggregated output
+   * @returns {ChildProcess~AggregatedOutput} aggregated output
    */
   removeNetwork(name) {
     return this._cp.spawnTemplate(
@@ -104,10 +101,8 @@ class Docker {
 
   /**
    * Remove a docker container.
-   * @memberOf dev.docker
-   * @function removeContainer
    * @param {string} name - Name of docker container
-   * @returns {dev.cp~AggregatedOutput} aggregated output
+   * @returns {ChildProcess~AggregatedOutput} aggregated output
    */
   removeContainer(name) {
     return this._cp.spawnTemplate(
@@ -121,8 +116,6 @@ class Docker {
 
   /**
    * Tail the logs of a container until output matches the given regex.
-   * @memberOf dev.docker
-   * @function waitForContainerOutput
    * @param {string} name - Name of docker container
    * @param {RegExp} regex - regex to match in output
    */
