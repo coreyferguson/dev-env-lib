@@ -1,9 +1,10 @@
 
-const ChildProcess = require('../src/cp');
+const ChildProcess = require('../src/ChildProcess');
 const path = require('path');
 
 const workingDirectory = path.resolve(__dirname, '../jsdoc');
-const cp = new ChildProcess({ workingDirectory });
+const sourceDirectory = workingDirectory;
+const cp = new ChildProcess({ workingDirectory, sourceDirectory });
 
 cp.spawn('git', ['init']).then(() => {
   return cp.spawn(

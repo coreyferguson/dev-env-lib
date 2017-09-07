@@ -10,7 +10,7 @@
     "debug": "npm run watch -- --inspect --debug-brk",
     "release": "npm run releaseIt && npm run releaseJsdoc",
     "releaseIt": "./node_modules/.bin/release-it",
-    "releaseJsdoc": "npm run jsdoc && node scripts/deploy-jsdoc.js",
+    "releaseJsdoc": "npm run jsdoc && node scripts/release-jsdoc.js",
     "eslint": "./node_modules/.bin/eslint .",
     "jsdoc": "rm -fr jsdoc && ./node_modules/.bin/jsdoc -d jsdoc src/**/*.js",
     "test": "./node_modules/.bin/mocha test/spec/**/*.js",
