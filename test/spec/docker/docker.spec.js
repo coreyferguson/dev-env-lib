@@ -1,18 +1,13 @@
 
-const Docker = require('../../../src/Docker');
+const cp = require('../../../src/cp');
+const docker = require('../../../src/docker');
 const { expect } = require('../../util/test');
-const ChildProcess = require('../../../src/ChildProcess');
 
-describe('Docker unit tests', () => {
+describe('docker unit tests', () => {
 
   const dockerName = 'dev-env-lib-test-docker';
   const networkName = 'dev-env-lib-test-net';
   const containerName = 'dev-env-lib-test-container';
-  const workingDirectory = __dirname;
-  const sourceDirectory = workingDirectory;
-  const defaultOptions = { workingDirectory };
-  const docker =  new Docker(defaultOptions);
-  const cp = new ChildProcess({ workingDirectory, sourceDirectory });
 
   afterEach(() => {
     return Promise.all([
@@ -22,16 +17,10 @@ describe('Docker unit tests', () => {
     ]);
   });
 
-  it('Docker constructor missing workingDirectory', () => {
-    const options = Object.assign({}, defaultOptions);
-    delete options.workingDirectory;
-    expect(() => new Docker(options)).to.throw(/workingDirectory/);
-  });
-
   it('build docker image / check existance', () => {
     return docker.imageExists(dockerName).then(exists => {
       expect(exists).to.be.false;
-      return docker.buildImage('dockerFilePath', dockerName);
+      return docker.buildImage(dockerName, [__dirname, 'dockerFilePath']);
     }).then(() => {
       return docker.imageExists(dockerName);
     }).then(exists => {
@@ -40,7 +29,7 @@ describe('Docker unit tests', () => {
   });
 
   it('remove docker image', () => {
-    return docker.buildImage('dockerFilePath', dockerName).then(() => {
+    return docker.buildImage(dockerName, [__dirname, 'dockerFilePath']).then(() => {
       return docker.imageExists(dockerName);
     }).then(exists => {
       expect(exists).to.be.true;
@@ -72,9 +61,10 @@ describe('Docker unit tests', () => {
   });
 
   it('remove existing container', () => {
-    return cp.spawn(
-      'docker',
-      [
+    return cp.spawn({
+      cwd: __dirname,
+      command: 'docker',
+      args: [
         'run',
         '--rm',
         '-d',
@@ -84,7 +74,7 @@ describe('Docker unit tests', () => {
         '-c',
         'tail -f /.dockerenv'
       ]
-    ).then(() => {
+    }).then(() => {
       return docker.removeContainer(containerName);
     });
   });
@@ -94,9 +84,10 @@ describe('Docker unit tests', () => {
   });
 
   it('wait for container output', () => {
-    return cp.spawn(
-      'docker',
-      [
+    return cp.spawn({
+      cwd: __dirname,
+      command: 'docker',
+      args: [
         'run',
         '-d',
         '--rm',
@@ -105,15 +96,16 @@ describe('Docker unit tests', () => {
         'echo',
         'hello world'
       ]
-    ).then(() => {
+    }).then(() => {
       return docker.waitForContainerOutput(containerName, /hello world/);
     });
   });
 
   it('wait for container output that never occurs', () => {
-    return cp.spawn(
-      'docker',
-      [
+    return cp.spawn({
+      cwd: __dirname,
+      command: 'docker',
+      args: [
         'run',
         '-d',
         '--rm',
@@ -122,7 +114,7 @@ describe('Docker unit tests', () => {
         'echo',
         'hello world'
       ]
-    ).then(() => {
+    }).then(() => {
       return expect(
         docker.waitForContainerOutput(containerName, /some other message/)
       ).to.eventually.be.rejectedWith(/stdio closed without matching regex/);

@@ -1,0 +1,5 @@
+docker
+build
+-t
+${model.name}
+${model.dockerfilePath}
