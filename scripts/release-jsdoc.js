@@ -1,36 +1,59 @@
 
-const ChildProcess = require('../src/ChildProcess');
+const cp = require('../src/cp');
 const path = require('path');
 
-const workingDirectory = path.resolve(__dirname, '../jsdoc');
-const sourceDirectory = workingDirectory;
-const cp = new ChildProcess({ workingDirectory, sourceDirectory });
+const cwd = [__dirname, '../jsdoc'];
 
-cp.spawn('git', ['init']).then(() => {
-  return cp.spawn(
-    'git',
-    [
+cp.spawn({
+  cwd,
+  command: 'git',
+  args: ['init']
+}).then(() => {
+  return cp.spawn({
+    cwd,
+    command: 'git',
+    args: [
       'remote',
       'add',
       'origin',
       'git@github.com:coreyferguson/dev-env-lib.git'
     ]
-  );
+  });
 }).then(res => {
   console.log(res.output);
-  return cp.spawn('git', ['fetch', 'origin']);
+  return cp.spawn({
+    cwd,
+    command: 'git',
+    args: ['fetch', 'origin']
+  });
 }).then(res => {
   console.log(res.output);
-  return cp.spawn('git', ['add', '.']);
+  return cp.spawn({
+    cwd,
+    command: 'git',
+    args: ['add', '.']
+  });
 }).then(res => {
   console.log(res.output);
-  return cp.spawn('git', ['ci', '-m', "docs"]);
+  return cp.spawn({
+    cwd,
+    command: 'git',
+    args: ['ci', '-m', "docs"]
+  });
 }).then(res => {
   console.log(res.output);
-  return cp.spawn('git', ['co', '-b', 'gh-pages']);
+  return cp.spawn({
+    cwd,
+    command: 'git',
+    args: ['co', '-b', 'gh-pages']
+  });
 }).then(res => {
   console.log(res.output);
-  return cp.spawn('git', ['push', '-fu', 'origin', 'gh-pages']);
+  return cp.spawn({
+    cwd,
+    command: 'git',
+    args: ['push', '-fu', 'origin', 'gh-pages']
+  });
 }).catch(err => {
   console.error('err:', err);
 });
