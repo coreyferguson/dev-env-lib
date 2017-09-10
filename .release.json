@@ -33,7 +33,7 @@
     "githubAssets": false
   },
   "npm": {
-    "publish": true,
+    "publish": false,
     "publishPath": ".",
     "tag": "latest",
     "private": false,
@@ -53,7 +53,7 @@
       "tag": true,
       "push": true,
       "release": true,
-      "publish": false
+      "publish": true
     },
     "dist": {
       "status": false,
