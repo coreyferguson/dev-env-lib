@@ -7,12 +7,13 @@
     "test": "test"
   },
   "scripts": {
-    "debug": "npm run watch -- --inspect --debug-brk",
+    "debug": "npm run watch -- --inspect",
+    "eslint": "./node_modules/.bin/eslint .",
+    "jsdoc": "rm -fr jsdoc && ./node_modules/.bin/jsdoc -d jsdoc src/**/*.js",
+    "pretest": "npm run eslint",
     "release": "npm run releaseIt && npm run releaseJsdoc",
     "releaseIt": "./node_modules/.bin/release-it",
     "releaseJsdoc": "npm run jsdoc && node scripts/release-jsdoc.js",
-    "eslint": "./node_modules/.bin/eslint .",
-    "jsdoc": "rm -fr jsdoc && ./node_modules/.bin/jsdoc -d jsdoc src/**/*.js",
     "test": "./node_modules/.bin/mocha test/spec/**/*.js",
     "watch": "npm test -- --watch"
   },
