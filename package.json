@@ -48,7 +48,8 @@
     "mocha": "^3.5.0",
     "release-it": "^2.8.5",
     "sinon": "^3.2.1",
-    "sinon-chai": "^2.13.0"
+    "sinon-chai": "^2.13.0",
+    "winston": "^2.3.1"
   },
   "dependencies": {
     "child-process-template-parser": "^1.0.0",
