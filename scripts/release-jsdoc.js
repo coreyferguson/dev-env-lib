@@ -1,6 +1,6 @@
 
 const cp = require('../src/cp');
-const path = require('path');
+const winston = require('winston');
 
 const cwd = [__dirname, '../jsdoc'];
 
@@ -20,40 +20,40 @@ cp.spawn({
     ]
   });
 }).then(res => {
-  console.log(res.output);
+  winston.log('info', res.output);
   return cp.spawn({
     cwd,
     command: 'git',
     args: ['fetch', 'origin']
   });
 }).then(res => {
-  console.log(res.output);
+  winston.log('info', res.output);
   return cp.spawn({
     cwd,
     command: 'git',
     args: ['add', '.']
   });
 }).then(res => {
-  console.log(res.output);
+  winston.log('info', res.output);
   return cp.spawn({
     cwd,
     command: 'git',
-    args: ['ci', '-m', "docs"]
+    args: ['ci', '-m', 'docs']
   });
 }).then(res => {
-  console.log(res.output);
+  winston.log('info', res.output);
   return cp.spawn({
     cwd,
     command: 'git',
     args: ['co', '-b', 'gh-pages']
   });
 }).then(res => {
-  console.log(res.output);
+  winston.log('info', res.output);
   return cp.spawn({
     cwd,
     command: 'git',
     args: ['push', '-fu', 'origin', 'gh-pages']
   });
 }).catch(err => {
-  console.error('err:', err);
+  winston.log('error', err);
 });

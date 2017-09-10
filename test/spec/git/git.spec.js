@@ -1,7 +1,6 @@
 
 const cp = require('../../../src/cp');
 const git = require('../../../src/git');
-const path = require('path');
 const { expect } = require('../../util/test');
 
 const cwd = [__dirname, 'workingDirectory'];
@@ -86,7 +85,7 @@ describe('git unit tests', function() {
         repository: 'git@github.com:coreyferguson/dev-env-lib.git',
         branch: 'testBranch'
       });
-    })
+    });
   });
 
-})
+});

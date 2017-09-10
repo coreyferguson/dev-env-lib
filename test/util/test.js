@@ -16,7 +16,7 @@ const getYaml = (thisPath, relativePath) => {
 };
 
 module.exports = {
-    expect: chai.expect,
-    sinon,
-    yaml: getYaml
+  expect: chai.expect,
+  sinon,
+  yaml: getYaml
 };

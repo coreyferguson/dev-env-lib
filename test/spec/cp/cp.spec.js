@@ -79,7 +79,7 @@ describe('cp unit tests', () => {
     return cp.spawnTemplate({
       cwd: [__dirname, 'workingDirectory'],
       templatePath: [__dirname, 'templates/find'],
-      model: { name: 'one\.txt' }
+      model: { name: 'one.txt' }
     }).then(response => {
       expect(response.code).to.eql(0);
       expect(response.stdout).to.match(/one\.txt/);
