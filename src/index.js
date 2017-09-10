@@ -1,6 +1,6 @@
 
 module.exports = {
-  cp: require('./childProcess'),
+  cp: require('./cp'),
   docker: require('./docker'),
   git: require('./git'),
   yaml: require('./yaml')
