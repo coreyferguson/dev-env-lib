@@ -66,6 +66,9 @@ class ChildProcess {
         output += data;
         stderr += data;
       });
+      cp.on('error', error => {
+        reject(error);
+      });
       cp.on('close', code => {
         const response = { code, output, stdout, stderr };
         if (code === 0) resolve(response);

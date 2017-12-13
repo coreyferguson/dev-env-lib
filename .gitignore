@@ -1,3 +1,4 @@
 node_modules/
 npm-debug.log
 jsdoc/
+package-lock.json
